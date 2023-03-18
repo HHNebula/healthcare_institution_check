@@ -29,7 +29,7 @@ import java.io.IOException;
 public class ApiExplorer {
 
 	final String ENCODING_TYPE = "UTF-8";
-	final String SERVICE_KEY = "qyu41dHfqWMsjJriPgiImVrkjd%2Fv3Z2n%2FDXTfdfz%2FtvtR3OqhMDDw8egXtEEI1%2BBpU1DgDFNvhjSC3E8wPE17A%3D%3D";
+	final String SERVICE_KEY = "";
 
 	public List<Map<String, String>> getApiDataPharmacy(Map<String, String> params)
 			throws IOException, SAXException, ParserConfigurationException {

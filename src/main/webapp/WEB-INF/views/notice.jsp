@@ -26,7 +26,7 @@
                     프로젝트를 실행하기 전에, 먼저 공공데이터 포털에서 '전국 약국 정보 조회 서비스'의 서비스키를 발급받아야 합니다.
                 </div>
                 <div class="my-3">
-                    발급된 서비스키는 프로젝트 내 코드에서 "..." 부분을 수정하여 입력해야 합니다.
+                    발급된 서비스키는 프로젝트 내 코드에서 "src\main\java\com\healthcare\institution\check\healthcare_institution_check\service\ApiExplorer.java"의 SERVICE_KEY 부분을 수정하여 입력해야 합니다.
                 </div>
                 <div class="my-3 text-center">
                     <a href="/home" class="btn btn-primary col-12 col-md-4 my-5">시작하기</a>
