@@ -7,6 +7,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -229,6 +230,92 @@ public class ApiExplorer {
 				map.put("rnum", element.getElementsByTagName("rnum").item(0).getTextContent());
 				map.put("wgs84Lat", element.getElementsByTagName("wgs84Lat").item(0).getTextContent());
 				map.put("wgs84Lon", element.getElementsByTagName("wgs84Lon").item(0).getTextContent());
+				result.add(map);
+			}
+		}
+		return result;
+	}
+
+	public List<Map<String, String>> getApiDataHolidayHospital(Map<String, String> params)
+			throws IOException, SAXException, ParserConfigurationException {
+
+		StringBuilder urlBuilder = new StringBuilder(
+				"http://apis.data.go.kr/B552657/HolidyEmgncClnicInsttInfoInqireService/getHolidyClnicPosblEgytInfoInqire");
+		urlBuilder.append("?" + URLEncoder.encode("serviceKey", ENCODING_TYPE) + "=" + SERVICE_KEY);
+
+		urlBuilder.append("&" + URLEncoder.encode("Q0", ENCODING_TYPE) + "="
+				+ URLEncoder.encode(params.get("doSelect"), ENCODING_TYPE));
+
+		urlBuilder.append("&" + URLEncoder.encode("Q1", ENCODING_TYPE) + "="
+				+ URLEncoder.encode(params.get("si"), ENCODING_TYPE));
+
+		urlBuilder.append("&" + URLEncoder.encode("QD", ENCODING_TYPE) + "="
+				+ URLEncoder.encode(params.get("medicalCode"), ENCODING_TYPE));
+
+		urlBuilder.append("&" + URLEncoder.encode("ORD", ENCODING_TYPE) + "="
+				+ URLEncoder.encode("NAME", ENCODING_TYPE));
+
+		urlBuilder.append("&" + URLEncoder.encode("pageNo", ENCODING_TYPE) + "="
+				+ URLEncoder.encode(params.get("pageNo"), ENCODING_TYPE));
+
+		urlBuilder.append("&" + URLEncoder.encode("numOfRows", ENCODING_TYPE) + "="
+				+ URLEncoder.encode("10", ENCODING_TYPE));
+
+		URL url = new URL(urlBuilder.toString());
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+		conn.setRequestMethod("GET");
+		conn.setRequestProperty("Content-type", "application/json");
+
+		System.out.println("Response code: " + conn.getResponseCode());
+
+		BufferedReader rd;
+		if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+			rd = new BufferedReader(new InputStreamReader(conn.getInputStream(), ENCODING_TYPE));
+		} else {
+			rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(), ENCODING_TYPE));
+		}
+
+		StringBuilder sb = new StringBuilder();
+		String line;
+		while ((line = rd.readLine()) != null) {
+			sb.append(line);
+		}
+
+		rd.close();
+		conn.disconnect();
+
+		String xml = sb.toString();
+
+		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+		InputSource is = new InputSource();
+		is.setCharacterStream(new StringReader(xml));
+		Document doc = dBuilder.parse(is);
+		doc.getDocumentElement().normalize();
+
+		NodeList nList = doc.getElementsByTagName("item");
+		List<Map<String, String>> result = new ArrayList<>();
+		for (int i = 0; i < nList.getLength(); i++) {
+			Node node = nList.item(i);
+			if (node.getNodeType() == Node.ELEMENT_NODE) {
+				NodeList childNodes = node.getChildNodes();
+				List<Element> elements = new ArrayList<>();
+				for (int j = 0; j < childNodes.getLength(); j++) {
+					Node childNode = childNodes.item(j);
+					if (childNode.getNodeType() == Node.ELEMENT_NODE) {
+						elements.add((Element) childNode);
+					}
+				}
+				Element element = (Element) node;
+				Iterator<Element> iterator = elements.iterator();
+				Map<String, String> map = new HashMap<>();
+				while (iterator.hasNext()) {
+					Element childElement = iterator.next();
+					String tagName = childElement.getTagName();
+
+					map.put(tagName, element.getElementsByTagName(tagName).item(0).getTextContent());
+				}
 				result.add(map);
 			}
 		}

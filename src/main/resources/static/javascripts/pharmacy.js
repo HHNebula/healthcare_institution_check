@@ -214,7 +214,7 @@ function resultUpdate(list) {
             rightDiv.classList.add("d-flex", "justify-content-between", "col-12", "col-md-4", "my-3");
 
             var rlDiv = document.createElement("div");
-            rlDiv.classList.add("mx-5");
+            rlDiv.classList.add("me-5");
             var rrDiv = document.createElement("div");
 
             var monElement = document.createElement("div");

@@ -52,14 +52,31 @@
                 <label class="form-label" for="medicalCode">진료과 선택</label>
                 <select class="form-select" name="medicalCode" id="medicalCode">
                     <option value="">전체</option>
-                    <option value="1">월요일</option>
-                    <option value="2">화요일</option>
-                    <option value="3">수요일</option>
-                    <option value="4">목요일</option>
-                    <option value="5">금요일</option>
-                    <option value="6">토요일</option>
-                    <option value="7">일요일</option>
-                    <option value="8">공휴일</option>
+                    <option value="D001">내과</option>
+                    <option value="D002">소아청소년과</option>
+                    <option value="D003">신경과</option>
+                    <option value="D005">피부과</option>
+                    <option value="D006">외과</option>
+                    <option value="D007">흉부외과</option>
+                    <option value="D008">정형외과</option>
+                    <option value="D009">신경외과</option>
+                    <option value="D010">성형외과</option>
+                    <option value="D011">산부외과</option>
+                    <option value="D012">안과</option>
+                    <option value="D013">이비인후과</option>
+                    <option value="D014">비뇨기과</option>
+                    <option value="D015">결핵과</option>
+                    <option value="D016">재활의학과</option>
+                    <option value="D017">마취통증의학과</option>
+                    <option value="D018">영상의학과</option>
+                    <option value="D022">가정의학과</option>
+                    <option value="D023">핵의학과</option>
+                    <option value="D024">응급의학과</option>
+                    <option value="D025">산업의학과</option>
+                    <option value="D026">치과</option>
+                    <option value="D029">예방의학과</option>
+                    <%-- <option value="H">약국</option>
+                    <option value="G">한의원</option> --%>
                 </select>
             </div>
             <div class="col-12 col-md-1 my-3 d-flex align-items-end">

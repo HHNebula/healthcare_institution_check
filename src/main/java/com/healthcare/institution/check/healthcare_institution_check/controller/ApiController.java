@@ -18,11 +18,25 @@ public class ApiController {
 
     @ResponseBody
     @PostMapping("/getApiPharmacy")
-    public Object integrateAction(@RequestBody Map<String, String> params) {
+    public Object pharmacyApi(@RequestBody Map<String, String> params) {
 
         Object resultList;
         try {
             resultList = apiExplorer.getApiDataPharmacy(params);
+        } catch (Exception e) {
+            resultList = null;
+        }
+
+        return resultList;
+    }
+
+    @ResponseBody
+    @PostMapping("/getApiHolidayHospital")
+    public Object holidayHospitalApi(@RequestBody Map<String, String> params) {
+
+        Object resultList;
+        try {
+            resultList = apiExplorer.getApiDataHolidayHospital(params);
         } catch (Exception e) {
             resultList = null;
         }

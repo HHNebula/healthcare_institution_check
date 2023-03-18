@@ -117,6 +117,7 @@ function searchAction(data) {
         contentType: 'application/json',
         data: JSON.stringify(Object.fromEntries(data)),
         success: function (list) {
+            console.log(list);
             resultUpdate(list);
             buttonUpdate();
         },
@@ -150,95 +151,154 @@ function resultUpdate(list) {
             var name = list[i].dutyName;
             var phone = list[i].dutyTel1;
             var address = list[i].dutyAddr;
-            var mon = list[i].dutyTime1s + " ~ " + list[i].dutyTime1c;
-            var tue = list[i].dutyTime2s + " ~ " + list[i].dutyTime2c;
-            var wed = list[i].dutyTime3s + " ~ " + list[i].dutyTime3c;
-            var thu = list[i].dutyTime4s + " ~ " + list[i].dutyTime4c;
-            var fri = list[i].dutyTime5s + " ~ " + list[i].dutyTime5c;
-            var sat = list[i].dutyTime6s + " ~ " + list[i].dutyTime6c;
-            var sun = list[i].dutyTime7s + " ~ " + list[i].dutyTime7c;
-            var holiday = list[i].dutyTime8s + " ~ " + list[i].dutyTime8c;
+            var address = list[i].dutyAddr;
+            var type = list[i].dutyDivName;
 
-            if (list[i].dutyTime1s == null) {
-                mon = "휴무"
-            }
-            if (list[i].dutyTime2s == null) {
-                tue = "휴무"
-            }
-            if (list[i].dutyTime3s == null) {
-                wed = "휴무"
-            }
-            if (list[i].dutyTime4s == null) {
-                thu = "휴무"
-            }
-            if (list[i].dutyTime5s == null) {
-                fri = "휴무"
-            }
-            if (list[i].dutyTime6s == null) {
-                sat = "휴무"
-            }
-            if (list[i].dutyTime7s == null) {
-                sun = "휴무"
-            }
-            if (list[i].dutyTime8s == null) {
-                holiday = "휴무"
+            var dutyDay1 = null;
+            var dutyDay2 = null;
+            var dutyDay3 = null;
+            var dutyDay4 = null;
+            var dutyDay5 = null;
+            var dutyDay6 = null;
+            var dutyDaytime1 = '휴무';
+            var dutyDaytime2 = '휴무';
+            var dutyDaytime3 = '휴무';
+            var dutyDaytime4 = '휴무';
+            var dutyDaytime5 = '휴무';
+            var dutyDaytime6 = '휴무';
+
+            if (list[i].dutyDay1 != null) {
+                dutyDay1 = list[i].dutyDay1;
+                if (list[i].dutyDaytime1 != null) {
+                    dutyDaytime1 = list[i].dutyDaytime1;
+                }
             }
 
+            if (list[i].dutyDay2 != null) {
+                dutyDay2 = list[i].dutyDay2;
+                if (list[i].dutyDaytime2 != null) {
+                    dutyDaytime2 = list[i].dutyDaytime2;
+                }
+            }
+
+            if (list[i].dutyDay3 != null) {
+                dutyDay3 = list[i].dutyDay3;
+                if (list[i].dutyDaytime3 != null) {
+                    dutyDaytime3 = list[i].dutyDaytime3;
+                }
+            }
+
+            if (list[i].dutyDay4 != null) {
+                dutyDay4 = list[i].dutyDay4;
+                if (list[i].dutyDaytime4 != null) {
+                    dutyDaytime4 = list[i].dutyDaytime4;
+                }
+            }
+
+            if (list[i].dutyDay5 != null) {
+                dutyDay5 = list[i].dutyDay5;
+                if (list[i].dutyDaytime5 != null) {
+                    dutyDaytime5 = list[i].dutyDaytime5;
+                }
+            }
+
+            if (list[i].dutyDay6 != null) {
+                dutyDay6 = list[i].dutyDay6;
+                if (list[i].dutyDaytime6 != null) {
+                    dutyDaytime6 = list[i].dutyDaytime6;
+                }
+            }
+
+            // Main Box
             var newElement = document.createElement("div");
             newElement.classList.add("d-flex", "justify-content-between", "my-3", "row");
 
+            // 메인의 왼쪽 부분 - 병원 정보
             var leftDiv = document.createElement("div");
             leftDiv.classList.add("col-12", "col-md-8", "my-3");
 
             var nameElement = document.createElement("h4");
             nameElement.textContent = name;
+            var typeElement = document.createElement("div");
+            typeElement.textContent = "구분 : " + type;
             var phoneElement = document.createElement("div");
             phoneElement.textContent = "연락처 : " + phone;
             var addressElement = document.createElement("div");
             addressElement.textContent = "주소 : " + address;
 
             leftDiv.appendChild(nameElement);
+            leftDiv.appendChild(typeElement);
             leftDiv.appendChild(phoneElement);
             leftDiv.appendChild(addressElement);
 
-            if (list[i].dutyMapimg != null) {
-                var mapimgElement = document.createElement("div");
-                mapimgElement.textContent = "상세 위치 : " + list[i].dutyMapimg;
-                leftDiv.appendChild(mapimgElement);
-            }
-
+            // 메인의 우측 부분 - 진료 날짜 및 시간
             var rightDiv = document.createElement("div");
-            rightDiv.classList.add("d-flex", "justify-content-between", "col-12", "col-md-4", "my-3");
+            rightDiv.classList.add("d-flex", "justify-content-center", "col-12", "col-md-4", "my-3");
 
             var rlDiv = document.createElement("div");
-            rlDiv.classList.add("mx-5");
             var rrDiv = document.createElement("div");
+            rlDiv.classList.add("me-5");
 
-            var monElement = document.createElement("div");
-            monElement.textContent = "월요일 : " + mon;
-            var tueElement = document.createElement("div");
-            tueElement.textContent = "화요일 : " + tue;
-            var wedElement = document.createElement("div");
-            wedElement.textContent = "수요일 : " + wed;
-            var thuElement = document.createElement("div");
-            thuElement.textContent = "목요일 : " + thu;
-            var friElement = document.createElement("div");
-            friElement.textContent = "금요일 : " + fri;
-            var satElement = document.createElement("div");
-            satElement.textContent = "토요일 : " + sat;
-            var sunElement = document.createElement("div");
-            sunElement.textContent = "일요일 : " + sun;
-            var holidayElement = document.createElement("div");
-            holidayElement.textContent = "공휴일 : " + holiday;
+            var dateElement1 = document.createElement("div");
+            dateElement1.textContent = "명절 날짜";
+            rlDiv.appendChild(dateElement1);
+            var dateElement2 = document.createElement("div");
+            dateElement2.textContent = "진료 시간";
+            rrDiv.appendChild(dateElement2);
 
-            rlDiv.appendChild(monElement);
-            rlDiv.appendChild(tueElement);
-            rlDiv.appendChild(wedElement);
-            rlDiv.appendChild(thuElement);
-            rrDiv.appendChild(friElement);
-            rrDiv.appendChild(satElement);
-            rrDiv.appendChild(sunElement);
-            rrDiv.appendChild(holidayElement);
+            if (dutyDay1 != null) {
+                var dutyDay1Element = document.createElement("div");
+                dutyDay1Element.textContent = dutyDay1;
+                rlDiv.appendChild(dutyDay1Element);
+                var dutyDaytime1Element = document.createElement("div");
+                dutyDaytime1Element.textContent = dutyDaytime1;
+                rrDiv.appendChild(dutyDaytime1Element);
+            }
+
+            if (dutyDay2 != null) {
+                var dutyDay2Element = document.createElement("div");
+                dutyDay2Element.textContent = dutyDay2;
+                rlDiv.appendChild(dutyDay2Element);
+                var dutyDaytime2Element = document.createElement("div");
+                dutyDaytime2Element.textContent = dutyDaytime2;
+                rrDiv.appendChild(dutyDaytime2Element);
+            }
+
+            if (dutyDay3 != null) {
+                var dutyDay3Element = document.createElement("div");
+                dutyDay3Element.textContent = dutyDay3;
+                rlDiv.appendChild(dutyDay3Element);
+                var dutyDaytime3Element = document.createElement("div");
+                dutyDaytime3Element.textContent = dutyDaytime3;
+                rrDiv.appendChild(dutyDaytime3Element);
+            }
+
+            if (dutyDay4 != null) {
+                var dutyDay4Element = document.createElement("div");
+                dutyDay4Element.textContent = dutyDay4;
+                rlDiv.appendChild(dutyDay4Element);
+                var dutyDaytime4Element = document.createElement("div");
+                dutyDaytime4Element.textContent = dutyDaytime4;
+                rrDiv.appendChild(dutyDaytime4Element);
+            }
+
+            if (dutyDay5 != null) {
+                var dutyDay5Element = document.createElement("div");
+                dutyDay5Element.textContent = dutyDay5;
+                rlDiv.appendChild(dutyDay5Element);
+                var dutyDaytime5Element = document.createElement("div");
+                dutyDaytime5Element.textContent = dutyDaytime5;
+                rrDiv.appendChild(dutyDaytime5Element);
+            }
+
+            if (dutyDay6 != null) {
+                var dutyDay6Element = document.createElement("div");
+                dutyDay6Element.textContent = dutyDay6;
+                rlDiv.appendChild(dutyDay6Element);
+                var dutyDaytime6Element = document.createElement("div");
+                dutyDaytime6Element.textContent = dutyDaytime6;
+                rrDiv.appendChild(dutyDaytime6Element);
+            }
 
             rightDiv.appendChild(rlDiv);
             rightDiv.appendChild(rrDiv);
